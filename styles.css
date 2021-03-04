@@ -1,40 +1,227 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: Courier, monospace;
+    vertical-align: baseline;
+}
+
+body {
+    font-family: Courier, monospace;
+    line-height: 1;
+    background-color: #f3e5f5;
+    color: #530404;
+
+}
+
+
+
+h1 {
+    font-weight: bold;
+    font-size: 2.1vw;
+}
+
+h2 {
+    font-weight: bolder;
+    font-size: 2.5vw;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 2vw;
+}
+
+h4 {
+    font-weight: bold;
+    font-size: 1.5vw;
+    display: inline-block;
+}
+
 li {
  list-style-type: none;
 }
 ul {
  margin-left: 0;
  padding-left: 0;
+ width: 80%;
 }
 
-.current{
-  background-color: red;
-}
-
-div{
-  border: 1px dotted grey;
-}
 .container {
+  border: 1px dotted grey;
+  padding-left: 5%;
+  width: 60%;
+  margin: auto;
   display: grid;
+
+  grid-row-gap: 4%;
 /*  height: 100vh;*/
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 300px 100px 250px 250px;
+  grid-template-rows: 4em auto auto auto auto;
   grid-template-areas:
+    "info info"
     "current_info current_weather"
     "favorites_header favorites_header"
     "favorite1 favorite2"
     "favorite3 favorite4"
 }
 
+.info{
+  grid-area: info;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+
+.title{
+  width: 40 %;
+}
+.update{
+  width: 60%;
+  font-weight: bold;
+  font-size: 1vw;
+  height: 40%;
+}
+
+.update button {
+  background-color: #ba68c8;
+}
+
+
+.info button{
+  height: 100%;
+  border-radius: 10px;
+  padding: 0px 10%;
+}
+
 .current_info {
   grid-area: current_info;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.current_info img {
+  width: 20%;
+}
+.current_temp{
+  font-weight: bold;
+  font-size: 3.2vw;
+  text-align: center;
+  display: inline-block;
+  margin-left: 3%;
 }
 
 .current_weather {
   grid-area: current_weather;
 }
 
+ li {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e1bee7;
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  font-size: 1.5em;
+
+}
+
 .favorites_header{
   grid-area: favorites_header;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorites_header_action{
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.favorites_header_action input {
+  font-size: 1.5em;
+  background-color: #e1bee7;
+  width: 50%;
+
+}
+
+.favorites_header_action button {
+  width: 1.7em;
+  height: 1.7em;
+  margin-left: 5%;
+  margin-right: 20%;
+  background-color: #ba68c8;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1vw;
+
+}
+
+.favorite {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.favorite_title{
+  margin-right: 5%;
+}
+
+.favorite img {
+  width: 7%;
+  margin-right: 10%;
+  margin-left: 5%;
+}
+
+.favorite ul {
+  width: 80%;
+}
+
+.favorite span {
+  display: inline-block;
+    margin-right: 5%;
+}
+
+.favorite button {
+  width: 1.7em;
+  height: 1.7em;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: #ba68c8;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1vw;
+
 }
 
 .favorite1{
@@ -51,4 +238,6 @@ div{
 
 .favorite4{
   grid-area: favorite4;
+}
+
 }
