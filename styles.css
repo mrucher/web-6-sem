@@ -57,23 +57,67 @@ ul {
  width: 80%;
 }
 
+main .loader-on .city-header,
+main .loader-on .full-weather-information,
+main .favorites .city-list .loader-on .city-header,
+main .favorites .city-list .loader-on .full-weather-information,
+main .loader-on .current_info,
+main .loader-on .current_weather {
+    display: none;
+}
+
+.mainCitySection{
+  display: grid;
+  grid-row-gap: 4%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 4em auto auto 2em;
+  grid-template-areas:
+    "info info"
+    "current-city current-city"
+    "favorites_header favorites_header"
+}
+
+.current-city {
+  grid-area: current-city;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "current_info current_weather"
+}
+
 .container {
   padding-left: 5%;
   width: 60%;
   margin: auto;
-  display: grid;
-
-  grid-row-gap: 4%;
-/*  height: 100vh;*/
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 4em auto auto auto auto;
-  grid-template-areas:
-    "info info"
-    "current_info current_weather"
-    "favorites_header favorites_header"
-    "favorite1 favorite2"
-    "favorite3 favorite4"
 }
+
+.city-loader {
+    display: none;
+  }
+
+.current_info{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+}
+
+.city-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(auto, auto);
+}
+
+.city-header{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
 
 .info{
   grid-area: info;
@@ -86,6 +130,16 @@ ul {
   height: 100%;
 }
 
+.loader-on .city-loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loader-on {
+  display: flex;
+  width: 90%;
+}
 
 .title{
   width: 40 %;
@@ -144,7 +198,7 @@ button[name="updateMobile"]{
   grid-area: current_weather;
 }
 
- li {
+.current_weather li {
   display: flex;
   justify-content: space-between;
   background-color: #e1bee7;
@@ -155,32 +209,24 @@ button[name="updateMobile"]{
 }
 
 .favorites_header{
-  grid-area: favorites_header;
+  width: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  grid-area: favorites_header;
+  flex-wrap: wrap;
 }
 
-.favorites_header_action{
-  width: 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
 
-.favorites_header_action input {
-  font-size: 1.5em;
+.add-city input {
+  font-size: 1.2em;
   background-color: #e1bee7;
-  width: 50%;
-
 }
 
-.favorites_header_action button {
+.add-city button {
   width: 1.7em;
   height: 1.7em;
-  margin-left: 5%;
-  margin-right: 20%;
   background-color: #ba68c8;
   border-radius: 50%;
   font-weight: bold;
@@ -206,10 +252,6 @@ button[name="updateMobile"]{
   margin-left: 5%;
 }
 
-.favorite ul {
-  width: 80%;
-}
-
 .favorite span {
   display: inline-block;
     margin-right: 5%;
@@ -218,8 +260,6 @@ button[name="updateMobile"]{
 .favorite button {
   width: 1.7em;
   height: 1.7em;
-  margin-left: 5%;
-  margin-right: 5%;
   background-color: #ba68c8;
   border-radius: 50%;
   font-weight: bold;
@@ -227,22 +267,10 @@ button[name="updateMobile"]{
 
 }
 
-
-.favorite1{
-  grid-area: favorite1;
+.city-list {
+  width: 100%;
 }
 
-.favorite2{
-  grid-area: favorite2;
-}
-
-.favorite3{
-  grid-area: favorite3;
-}
-
-.favorite4{
-  grid-area: favorite4;
-}
 
 @media (max-width: 1200px) {
   button[name="update"] {
@@ -265,13 +293,44 @@ button[name="updateMobile"]{
     margin:0 15% 0 15%;
     width: 70%;
   }
-  .favorites_header_action
+  .mainCitySection {
+    display: block;
+  }
+  .add-city
   {
     display: block;
   }
-  .favorites_header_action button{
+  .add-city button{
     margin-left: 0;
+  }
+  .current-city {
+    display: block;
+  }
+  .city-list {
+    display: block;
+  }
+  .favorite {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .favorite button, .favorites_header button{
+    width: 2em;
+    height: 2em;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .current_weather li {
+    font-size: 1.2em;
+  }
+  .favorites_header_title{
+    width: 80%;
   }
 
 
+}
+
+@media (max-width: 720px) {
+  .current_weather li {
+    font-size: 0.9em;
+  }
 }
