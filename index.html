@@ -1,178 +1,98 @@
-  <!DOCTYPE html>
-  <html lang="ru" dir="ltr">
-    <head>
-      <meta charset="utf-8">
-      <title>Погода</title>
-      <link rel="stylesheet" href="styles.css">
-      <style>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-  </style>
-    </head>
-    <body>
-      <main>
-        <div class="container">
-            <div class="tableElement info">
-              <div class="title">
+<main>
+    <div class="container">
+
+        <div class="tableElement info">
+            <div class="title">
                 <h1>Погода здесь</h1>
-              </div>
-              <div class="update">
-                <button type="button" name="update">Обновить геолокацию</button>
-                <button type="button" name="updateMobile">⟳</button>
-              </div>
-
             </div>
-
+            <button class="update">
+                <span class="refresh-text">Обновить геолокацию</span>
+                <img src="assets/update.png" alt="">
+            </button>
+        </div>
+        <div class="current-city loader-on">
             <div class="current_info">
-              <h2>Санкт-Петербург</h2>
-              <div class="break"></div>
-
-              <img src="icon.png" alt="Иконка1">
-              <div class="current_temp">5&deg;C</div>
+                <h2 class="city-header"></h2>
+                <div class="break"></div>
+                <img src="assets/update.png" class="weather-icon main-icon" alt="Иконка погоды" id="favicon">
             </div>
             <div class="current_weather">
-              <ul>
-                <li>
-                  <div>Ветер</div>
-                  <div>3 м/с</div>
-                </li>
-                <li>
-                  <div>Облачность</div>
-                  <div>Пасмурно</div>
-                </li>
-                <li>
-                  <div>Давление</div>
-                  <div>1000 мм рт.ст</div>
-                </li>
-                <li>
-                  <div>Влажность</div>
-                  <div>90%</div>
-                </li>
-              </ul>
+                <ul class="full-weather-info">
+                    <li class="temperature weather-info"><span class="key">Температура</span> <span
+                            class="value">0</span></li>
+                    <li class="wind weather-info"><span class="key">Ветер</span> <span
+                            class="value"></span>
+                    </li>
+                    <li class="cloudy weather-info"><span class="key">Облачность</span> <span class="value"></span>
+                    </li>
+                    <li class="pressure weather-info"><span class="key">Давление</span> <span
+                            class="value"></span></li>
+                    <li class="humidity weather-info"><span class="key">Влажность</span> <span
+                            class="value"></span></li>
+                </ul>
             </div>
+            <div class="city-loader">
+                <span>Подождите, данные загружаются</span>
+                <div class="loader-icon"></div>
+            </div>
+        </div>
 
-          <div class="favorites_header">
-            <div class="favorites_header_title">
-              <h3>Избранное</h3>
-            </div>
-            <div class="favorites_header_action">
-              <input placeholder="Добавить город" type="text" name="Add_favorites">
-              <button type="button" name="Add_favorites_button">+</button>
-            </div>
+        <div class="favorites_header">
+            <h2 class="favorites_header_title">Избранное</h2>
 
-          </div>
-            <div class="favorite favorite1">
-                  <div class="favorite_title">
-                    <h4>Москва</h4>
-                  </div
-                  <span class="favorite_temp">1&deg;C</span>
-                  <img src="icon.png" alt="Иконка1">
-                  <button type="button" name="delete_favorite">&times;</button>
-                  <div class="break"></div>
-                    <ul>
-                      <li>
-                        <div>Ветер</div>
-                        <div>3 м/с</div>
-                      </li>
-                      <li>
-                        <div>Облачность</div>
-                        <div>Пасмурно</div>
-                      </li>
-                      <li>
-                        <div>Давление</div>
-                        <div>1000 мм рт.ст</div>
-                      </li>
-                      <li>
-                        <div>Влажность</div>
-                        <div>90%</div>
-                      </li>
+            <form name="add-city" class="add-city">
+                <input type="text" id="favorite-city-name" class="add-city-field"
+                       placeholder="Добавить новый город">
+                <button class="add-city-button">+</button>
+            </form>
+        </div>
+
+        <ul class="city-list">
+            <template id="city-list-template">
+                <li class="favorite loader-on" id="1">
+                    <div class="city-header">
+                        <div class="city-info">
+                            <h3 class="city-name"></h3>
+                            <span class="temperature-number"></span>
+                            <img src="assets/update.png" class="list-icon weather-icon" alt="Иконка погоды">
+                        </div>
+                        <button class="close-button">Х</button>
+                    </div>
+                    <div class="break"></div>
+                    <ul class="current_weather">
+                        <li class="wind weather-info"><span class="key">Ветер</span> <span
+                                class="value">6.0 m/s</span>
+                        </li>
+                        <li class="cloudy weather-info"><span class="key">Облачность</span> <span class="value">Broken clouds</span>
+                        </li>
+                        <li class="pressure weather-info"><span class="key">Давление</span> <span
+                                class="value">1000 hpa</span></li>
+                        <li class="humidity weather-info"><span class="key">Влажность</span> <span
+                                class="value">52%</span></li>
                     </ul>
 
-            </div>
-            <div class="favorite favorite2">
-                  <div class="favorite_title">
-                    <h4>Москва</h4>
-                  </div
-                  <span class="favorite_temp">1&deg;C</span>
-                  <img src="icon.png" alt="Иконка1">
-                  <button type="button" name="delete_favorite">&times;</button>
-                  <div class="break"></div>
-                    <ul>
-                      <li>
-                        <div>Ветер</div>
-                        <div>3 м/с</div>
-                      </li>
-                      <li>
-                        <div>Облачность</div>
-                        <div>Пасмурно</div>
-                      </li>
-                      <li>
-                        <div>Давление</div>
-                        <div>1000 мм рт.ст</div>
-                      </li>
-                      <li>
-                        <div>Влажность</div>
-                        <div>90%</div>
-                      </li>
-                    </ul>
+                    <div class="city-loader">
+                        <span>Подождите, данные загружаются</span>
+                        <div class="loader-icon"></div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+    </div>
+</main>
 
-            </div>
-            <div class="favorite favorite3">
-                  <div class="favorite_title">
-                    <h4>Москва</h4>
-                  </div
-                  <span class="favorite_temp">1&deg;C</span>
-                  <img src="icon.png" alt="Иконка1">
-                  <button type="button" name="delete_favorite">&times;</button>
-                  <div class="break"></div>
-                    <ul>
-                      <li>
-                        <div>Ветер</div>
-                        <div>3 м/с</div>
-                      </li>
-                      <li>
-                        <div>Облачность</div>
-                        <div>Пасмурно</div>
-                      </li>
-                      <li>
-                        <div>Давление</div>
-                        <div>1000 мм рт.ст</div>
-                      </li>
-                      <li>
-                        <div>Влажность</div>
-                        <div>90%</div>
-                      </li>
-                    </ul>
-
-            </div>
-            <div class="favorite favorite4">
-                  <div class="favorite_title">
-                    <h4>Москва</h4>
-                  </div
-                  <span class="favorite_temp">1&deg;C</span>
-                  <img src="icon.png" alt="Иконка1">
-                  <button type="button" name="delete_favorite">&times;</button>
-                  <div class="break"></div>
-                    <ul>
-                      <li>
-                        <div>Ветер</div>
-                        <div>3 м/с</div>
-                      </li>
-                      <li>
-                        <div>Облачность</div>
-                        <div>Пасмурно</div>
-                      </li>
-                      <li>
-                        <div>Давление</div>
-                        <div>1000 мм рт.ст</div>
-                      </li>
-                      <li>
-                        <div>Влажность</div>
-                        <div>90%</div>
-                      </li>
-                    </ul>
-
-            </div>
-          </div>
-      </main>
-    </body>
-  </html>
+<script src="weather.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
