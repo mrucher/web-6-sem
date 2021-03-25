@@ -26,7 +26,6 @@ body {
 }
 
 
-
 h1 {
     font-weight: bold;
     font-size: 2.1vw;
@@ -49,13 +48,15 @@ h4 {
 }
 
 li {
- list-style-type: none;
+    list-style-type: none;
 }
+
 ul {
- margin-left: 0;
- padding-left: 0;
- width: 80%;
+    margin-left: 0;
+    padding-left: 0;
+    width: 90%;
 }
+
 
 main .loader-on .city-header,
 main .loader-on .full-weather-information,
@@ -66,50 +67,54 @@ main .loader-on .current_weather {
     display: none;
 }
 
-.mainCitySection{
-  display: grid;
-  grid-row-gap: 4%;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 4em auto auto 2em;
-  grid-template-areas:
+button img {
+    display: none;
+}
+
+.mainCitySection {
+    display: grid;
+    grid-row-gap: 4%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 4em auto auto 2em;
+    grid-template-areas:
     "info info"
     "current-city current-city"
     "favorites_header favorites_header"
 }
 
 .current-city {
-  grid-area: current-city;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas:
+    grid-area: current-city;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
     "current_info current_weather"
 }
 
 .container {
-  padding-left: 5%;
-  width: 60%;
-  margin: auto;
+    padding-left: 5%;
+    width: 65%;
+    margin: auto;
 }
 
 .city-loader {
     display: none;
-  }
+}
 
-.current_info{
+.current_info {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: auto;
 }
 
-.city-list{
+.city-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: minmax(auto, auto);
 }
 
-.city-header{
-    width: 80%;
+.city-header {
+    width: 90%;
     display: flex;
     justify-content: space-between;
 
@@ -119,15 +124,15 @@ main .loader-on .current_weather {
 }
 
 
-.info{
-  grid-area: info;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  justify-content: space-between;
-  height: 100%;
+.info {
+    grid-area: info;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .loader-on .city-loader {
@@ -137,200 +142,214 @@ main .loader-on .current_weather {
 }
 
 .loader-on {
-  display: flex;
-  width: 90%;
+    display: flex;
+    width: 90%;
 }
 
-.title{
-  width: 40 %;
-}
-.update{
-  width: 60%;
-  font-weight: bold;
-  font-size: 1vw;
-  height: 40%;
+.title {
+    width: 40%;
 }
 
-button[name="update"] {
-  background-color: #ba68c8;
-}
-button[name="updateMobile"]{
-  background-color: #ba68c8;
-  display: none;
+.update {
+    width: auto;
+    margin-right: 20%;
+    /*width: 60%;*/
+    font-weight: bold;
+    font-size: 1vw;
+    height: 40%;
 }
 
+button[class="update"] {
+    background-color: #ba68c8;
+}
 
-.info button{
-  height: 100%;
-  border-radius: 10px;
-  padding: 0px 10%;
+.info button {
+    height: 100%;
+    border-radius: 10px;
+    padding: 0px 10%;
 }
 
 .current_info {
-  grid-area: current_info;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  justify-content: flex-start;
-  height: 100%;
+    grid-area: current_info;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.city-info {
+    display: flex;
+    width: 80%;
+    align-items: center;
 }
 
 .break {
-  flex-basis: 100%;
-  height: 0;
+    flex-basis: 100%;
+    height: 0;
 }
 
 .current_info img {
-  width: 20%;
+    width: 40%;
 }
-.current_temp{
-  font-weight: bold;
-  font-size: 3.2vw;
-  text-align: center;
-  display: inline-block;
-  margin-left: 3%;
+
+.current_temp {
+    font-weight: bold;
+    font-size: 3.2vw;
+    text-align: center;
+    display: inline-block;
+    margin-left: 3%;
 }
 
 .current_weather {
-  grid-area: current_weather;
+    grid-area: current_weather;
 }
 
 .current_weather li {
-  display: flex;
-  justify-content: space-between;
-  background-color: #e1bee7;
-  margin-bottom: 4px;
-  padding: 6px 12px;
-  font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    background-color: #e1bee7;
+    margin-bottom: 4px;
+    padding: 6px 12px;
+    font-size: 1.5em;
 
 }
 
-.favorites_header{
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  grid-area: favorites_header;
-  flex-wrap: wrap;
+.favorites_header {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: favorites_header;
+    flex-wrap: wrap;
 }
 
 
 .add-city input {
-  font-size: 1.2em;
-  background-color: #e1bee7;
+    font-size: 1.2em;
+    background-color: #e1bee7;
 }
 
 .add-city button {
-  width: 1.7em;
-  height: 1.7em;
-  background-color: #ba68c8;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 1vw;
+    width: 1.7em;
+    height: 1.7em;
+    background-color: #ba68c8;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1vw;
 
 }
 
 .favorite {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.favorite_title{
-  margin-right: 5%;
-}
-
-.favorite img {
-  width: 7%;
-  margin-right: 10%;
-  margin-left: 5%;
-}
-
-.favorite span {
-  display: inline-block;
+.favorite_title {
     margin-right: 5%;
 }
 
+.favorite img {
+    margin-left: 3%;
+}
+
+.favorite span {
+    display: inline-block;
+    margin-left: 3%;
+}
+
 .favorite button {
-  width: 1.7em;
-  height: 1.7em;
-  background-color: #ba68c8;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 1vw;
+    width: 1.7em;
+    height: 1.7em;
+    background-color: #ba68c8;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1vw;
 
 }
 
 .city-list {
-  width: 100%;
+    width: 100%;
 }
 
 
 @media (max-width: 1200px) {
-  button[name="update"] {
-    display: none;
-  }
-  button[name="updateMobile"] {
-    display: inline-block;
-    width: 1.5em;
-    padding: 0;
-    font-size: 1.5em;
-    margin-top: 1px;
-  }
-  .update{
-    width: auto;
-    margin-right: 20%;
-  }
-  .container {
-    display: block;
-    padding-left: 7%;
-    margin:0 15% 0 15%;
-    width: 70%;
-  }
-  .mainCitySection {
-    display: block;
-  }
-  .add-city
-  {
-    display: block;
-  }
-  .add-city button{
-    margin-left: 0;
-  }
-  .current-city {
-    display: block;
-  }
-  .city-list {
-    display: block;
-  }
-  .favorite {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .favorite button, .favorites_header button{
-    width: 2em;
-    height: 2em;
-    margin-bottom: 5px;
-    margin-top: 5px;
-  }
-  .current_weather li {
-    font-size: 1.2em;
-  }
-  .favorites_header_title{
-    width: 80%;
-  }
+    button[class="update"] span {
+        display: none;
+    }
+
+    .update {
+        width: auto;
+        margin-right: 20%;
+    }
+
+    .update img {
+        display: block;
+        height: 15px;
+    }
+
+    .container {
+        display: block;
+        padding-left: 7%;
+        margin: 0 15% 0 15%;
+        width: 65%;
+    }
+
+    .current-city {
+        display: block;
+    }
+
+    .add-city {
+        display: block;
+    }
+
+    .add-city button {
+        margin-left: 0;
+    }
+
+    .current_info {
+        display: block;
+    }
+    .current_info img {
+        width: 20%;
+    }
+
+    .city-list {
+        display: block;
+    }
+
+    .favorite {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .favorite button, .favorites_header button {
+        width: 2em;
+        height: 2em;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    .current_weather li {
+        font-size: 1.2em;
+    }
+
+    .favorites_header_title {
+        width: 80%;
+    }
 
 
 }
 
 @media (max-width: 720px) {
-  .current_weather li {
-    font-size: 0.9em;
-  }
+    .current_weather li {
+        font-size: 0.9em;
+    }
 }

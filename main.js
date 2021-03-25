@@ -3,7 +3,7 @@ const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 const cityListForm = document.forms['add-city'];
 const refreshButton = document.getElementsByClassName('update')[0];
 const citiesList = document.getElementsByClassName('city-list')[0];
-const currentCity = document.getElementsByClassName('current-city')[0];
+const currentCity = document.getElementsByClassName('current_info')[0];
 const cityStorage = window.localStorage;
 
 
