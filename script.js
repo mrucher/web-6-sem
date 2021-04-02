@@ -9,17 +9,20 @@ const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 
 async function loadCities() {
-    for (let key of getCityList()) {
-        addCity(key, true);
+    cities = await getCities()
+    for (let key of cities) {
+        await addCity(key, true);
     }
 }
 
+/*
 function getNewCityId() {
     const cityId = cityStorage.getItem('lastId');
     cityStorage.setItem('lastId', Number.parseInt(cityStorage.getItem('lastId')) + 1);
     return cityId;
-}
+}*/
 
+/*
 function getCityList() {
     let keys = Object.keys(cityStorage).filter(item => item !== 'lastId');
     keys.sort(function (first, second) {
@@ -27,6 +30,16 @@ function getCityList() {
     });
 
     return keys;
+}*/
+
+async function getCities() {
+    let cities;
+    await fetch("http://localhost:3000/features")
+        .then(response => response.json())
+        .then(data => {
+            cities = data;
+        })
+    return cities;
 }
 
 function createStorage() {
@@ -69,40 +82,51 @@ async function updateFavicon(weatherData) {
 
 function getCoordinates() {
     navigator.geolocation.getCurrentPosition(function (position) {
-        updateCurrentCityInfo({
-            'latitude': position.coords.latitude,
-            'longitude': position.coords.longitude
-        });
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+        ans = `http://localhost:3000/weather/coordinates?lat=${lat}&lon=${lon}`;
+        updateCurrentCityInfo(ans)
     }, function (e) {
-        updateCurrentCityInfo({
-            'latitude': 55.76,
-            'longitude': 37.62
-        });
+        ans = `http://localhost:3000/weather/city?q=москва`;
+        updateCurrentCityInfo(ans)
         console.warn(`There has been a problem with access to geolocation: ` + e.message)
     });
 }
 
-async function updateCurrentCityInfo(coordinates) {
-    let weatherData = await getWeatherByCoordinates(coordinates['latitude'], coordinates['longitude']);
+async function updateCurrentCityInfo(url) {
+    let weatherData = await getWeatherByCoordinates(url);
     unsetCurrentCityLoader();
     updateFavicon(weatherData);
     updateCurrentCityHeadInfo(weatherData);
     updateFullMainWeatherInfo(currentCity, weatherData);
 }
 
-function isEmptyOrSpaces(str){
+function isEmptyOrSpaces(str) {
     return str === null || str.match(/^ *$/) !== null;
 }
 
-async function addCity(cityName, fromStorage= false) {
-    if (isEmptyOrSpaces(cityName)){
+async function addCity(cityName, isLoad = false) {
+
+    if (isEmptyOrSpaces(cityName)) {
         alert('Введите название города');
         return;
     }
-    const cityId = fromStorage ? cityStorage.getItem(cityName) : getNewCityId();
+    //const cityId = fromStorage ? cityStorage.getItem(cityName) : getNewCityId();
+    if (!isLoad) {
+        res = await fetch('http://localhost:3000/features?city=' + cityName,
+            {
+                method: 'POST'
+            })
+        if (res.status === 300) {
+            alert("Город уже в избранном")
+            return
+        }
+    }
+
+    const favoriteCityElement = renderEmptyCity(cityName);
+
     let weatherData = await getWeatherByCityName(cityName);
-    const favoriteCityElement = renderEmptyCity(cityId);
-    if (weatherData === undefined){
+    if (weatherData === undefined) {
         alert('Нет подключения к интернету');
         return;
     }
@@ -110,29 +134,45 @@ async function addCity(cityName, fromStorage= false) {
 
     if (weatherData['cod'] !== 200) {
         alert('Нет данных по городу');
-        deleteCityFromUI(cityId);
+        deleteCityFromUI(cityName);
         return;
     }
-
-    if (cityStorage.getItem(weatherData['name']) !== null && !fromStorage) {
-        alert('У вас уже есть этот город в списке избранных');
-        deleteCityFromUI(cityId);
-        return;
-    }
-
-    cityStorage.setItem(weatherData['name'], cityId);
 
     updateCityHeadInfo(favoriteCityElement, weatherData);
     updateFullWeatherInfo(favoriteCityElement, weatherData);
-    unsetCityLoader(cityId);
+    unsetCityLoader(cityName);
+
+
+    // citiesList.appendChild(favoriteCityElement);
+
+
+    /*
+        if (cityStorage.getItem(weatherData['name']) !== null && !fromStorage) {
+            alert('У вас уже есть этот город в списке избранных');
+            deleteCityFromUI(cityId);
+            return;
+        }
+    */
+    //  cityStorage.setItem(weatherData['name'], cityId);
+
+
 }
 
-function deleteCityById(cityId) {
-    for (let key of getCityList()) {
-        if (cityStorage.getItem(key) === cityId) {
-            cityStorage.removeItem(key);
-            break
-        }
+async function deleteCityById(cityId) {
+   // el.querySelector('button').disabled = true;
+    //cityId = cityId.toLowerCase();
+    try {
+        await fetch('http://localhost:3000/features?city=' + cityId,
+            {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (res.status === 200) {
+                    el.remove();
+                }
+            })
+    } catch (err) {
+        //el.querySelector('button').disabled = false;
     }
 
     deleteCityFromUI(cityId);
@@ -151,13 +191,13 @@ function updateCurrentCityHeadInfo(weatherData) {
 function updateCityHeadInfo(favoriteCityElement, weatherData) {
     const briefWeatherElement = favoriteCityElement.getElementsByClassName('city-header')[0];
     briefWeatherElement.getElementsByClassName('city-name')[0].textContent = weatherData['name'];
-    briefWeatherElement.getElementsByClassName('temperature-number')[0].innerHTML = `${Math.round(weatherData['main']['temp_min'])} &deg;C`;
+    briefWeatherElement.getElementsByClassName('temperature-number')[0].innerHTML = `${Math.round(weatherData['main']['temp_min']) - 273} &deg;C`;
     briefWeatherElement.getElementsByClassName('weather-icon')[0].src = getWeatherIcon(weatherData);
 }
 
 function updateFullMainWeatherInfo(favoriteCityElement, weatherData) {
     const fullWeatherElement = favoriteCityElement.getElementsByClassName('current_weather')[0];
-    fullWeatherElement.getElementsByClassName('temperature')[0].getElementsByClassName('value')[0].textContent = `${Math.round(weatherData['main']['temp_min'])} ℃`;
+    fullWeatherElement.getElementsByClassName('temperature')[0].getElementsByClassName('value')[0].textContent = `${Math.round(weatherData['main']['temp_min']) - 273} ℃`;
     fullWeatherElement.getElementsByClassName('wind')[0].getElementsByClassName('value')[0].textContent = `${weatherData['wind']['speed']} m/s`;
     fullWeatherElement.getElementsByClassName('cloudy')[0].getElementsByClassName('value')[0].textContent = weatherData['weather'][0]['main'];
     fullWeatherElement.getElementsByClassName('pressure')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['pressure']} hpa`;
@@ -169,12 +209,13 @@ function updateFullWeatherInfo(favoriteCityElement, weatherData) {
     fullWeatherElement.getElementsByClassName('wind')[0].getElementsByClassName('value')[0].textContent = `${weatherData['wind']['speed']} m/s`;
     fullWeatherElement.getElementsByClassName('cloudy')[0].getElementsByClassName('value')[0].textContent = weatherData['weather'][0]['main'];
     fullWeatherElement.getElementsByClassName('pressure')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['pressure']} hpa`;
-    fullWeatherElement.getElementsByClassName('humidity')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['humidity']}%`;}
+    fullWeatherElement.getElementsByClassName('humidity')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['humidity']}%`;
+}
 
-function renderEmptyCity(cityId) {
+function renderEmptyCity(cityName) {
     const template = document.getElementById('city-list-template');
     const favoriteCityElement = document.importNode(template.content.firstElementChild, true);
-    favoriteCityElement.id = `favorite_${cityId}`;
+    favoriteCityElement.id = `favorite_${cityName}`;
     return favoriteCityElement;
 }
 
@@ -195,13 +236,12 @@ function unsetCityLoader(cityId) {
 }
 
 
-function getWeatherByCityName(cityName) {
-    const url = `${API_URL}?q=${cityName}&units=metric&appid=${API_KEY}`;
+function getWeatherByCityName(city) {
+    const url = `http://localhost:3000/weather/city?q=${city}`;
     return doRequest(url);
 }
 
-function getWeatherByCoordinates(lat, lon) {
-    const url = `${API_URL}?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
+function getWeatherByCoordinates(url) {
     return doRequest(url);
 }
 
