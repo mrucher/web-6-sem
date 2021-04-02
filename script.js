@@ -15,23 +15,6 @@ async function loadCities() {
     }
 }
 
-/*
-function getNewCityId() {
-    const cityId = cityStorage.getItem('lastId');
-    cityStorage.setItem('lastId', Number.parseInt(cityStorage.getItem('lastId')) + 1);
-    return cityId;
-}*/
-
-/*
-function getCityList() {
-    let keys = Object.keys(cityStorage).filter(item => item !== 'lastId');
-    keys.sort(function (first, second) {
-        return cityStorage.getItem(first) - cityStorage.getItem(second);
-    });
-
-    return keys;
-}*/
-
 async function getCities() {
     let cities;
     await fetch("http://localhost:3000/features")
@@ -111,7 +94,8 @@ async function addCity(cityName, isLoad = false) {
         alert('Введите название города');
         return;
     }
-    //const cityId = fromStorage ? cityStorage.getItem(cityName) : getNewCityId();
+    const favoriteCityElement = renderEmptyCity(cityName);
+    citiesList.appendChild(favoriteCityElement);
     if (!isLoad) {
         res = await fetch('http://localhost:3000/features?city=' + cityName,
             {
@@ -123,14 +107,14 @@ async function addCity(cityName, isLoad = false) {
         }
     }
 
-    const favoriteCityElement = renderEmptyCity(cityName);
+    //const favoriteCityElement = renderEmptyCity(cityName);
 
     let weatherData = await getWeatherByCityName(cityName);
     if (weatherData === undefined) {
         alert('Нет подключения к интернету');
         return;
     }
-    citiesList.appendChild(favoriteCityElement);
+
 
     if (weatherData['cod'] !== 200) {
         alert('Нет данных по городу');
@@ -141,26 +125,9 @@ async function addCity(cityName, isLoad = false) {
     updateCityHeadInfo(favoriteCityElement, weatherData);
     updateFullWeatherInfo(favoriteCityElement, weatherData);
     unsetCityLoader(cityName);
-
-
-    // citiesList.appendChild(favoriteCityElement);
-
-
-    /*
-        if (cityStorage.getItem(weatherData['name']) !== null && !fromStorage) {
-            alert('У вас уже есть этот город в списке избранных');
-            deleteCityFromUI(cityId);
-            return;
-        }
-    */
-    //  cityStorage.setItem(weatherData['name'], cityId);
-
-
 }
 
 async function deleteCityById(cityId) {
-   // el.querySelector('button').disabled = true;
-    //cityId = cityId.toLowerCase();
     try {
         await fetch('http://localhost:3000/features?city=' + cityId,
             {
@@ -172,7 +139,6 @@ async function deleteCityById(cityId) {
                 }
             })
     } catch (err) {
-        //el.querySelector('button').disabled = false;
     }
 
     deleteCityFromUI(cityId);
@@ -216,10 +182,18 @@ function renderEmptyCity(cityName) {
     const template = document.getElementById('city-list-template');
     const favoriteCityElement = document.importNode(template.content.firstElementChild, true);
     favoriteCityElement.id = `favorite_${cityName}`;
+    favoriteCityElement.className = 'loader-on'
     return favoriteCityElement;
 }
 
 function setLoaderOnCurrentCity() {
+    if (!currentCity.classList.contains('loader-on')) {
+
+        currentCity.classList.add('loader-on');
+    }
+}
+
+function setLoaderOnCity(el) {
     if (!currentCity.classList.contains('loader-on')) {
 
         currentCity.classList.add('loader-on');

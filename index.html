@@ -21,6 +21,10 @@
             </button>
         </div>
         <div class="current-city loader-on">
+            <div class="city-loader">
+                <span>Подождите, данные загружаются</span>
+                <div class="loader-icon"></div>
+            </div>
             <div class="current_info">
                 <h2 class="city-header"></h2>
                 <div class="break"></div>
@@ -41,10 +45,7 @@
                             class="value"></span></li>
                 </ul>
             </div>
-            <div class="city-loader">
-                <span>Подождите, данные загружаются</span>
-                <div class="loader-icon"></div>
-            </div>
+
         </div>
 
         <div class="favorites_header">
@@ -59,12 +60,12 @@
 
         <ul class="city-list">
             <template id="city-list-template">
-                <li class="favorite loader-on" id="1">
+                <li class="loader-on">
                     <div class="city-header">
                         <div class="city-info">
                             <h3 class="city-name"></h3>
                             <span class="temperature-number"></span>
-                            <img src="assets/update.png" class="list-icon weather-icon" alt="Иконка погоды">
+                            <img src="" class="list-icon weather-icon" alt="Иконка погоды">
                         </div>
                         <button class="close-button">Х</button>
                     </div>
@@ -80,11 +81,12 @@
                         <li class="humidity weather-info"><span class="key">Влажность</span> <span
                                 class="value">52%</span></li>
                     </ul>
-
                     <div class="city-loader">
                         <span>Подождите, данные загружаются</span>
                         <div class="loader-icon"></div>
                     </div>
+
+
                 </li>
             </template>
         </ul>

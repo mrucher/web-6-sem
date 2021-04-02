@@ -39,6 +39,7 @@ h2 {
 h3 {
     font-weight: bold;
     font-size: 2vw;
+    margin-right: 5%;
 }
 
 h4 {
@@ -66,6 +67,9 @@ main .loader-on .current_info,
 main .loader-on .current_weather {
     display: none;
 }
+
+
+
 
 button img {
     display: none;
@@ -265,13 +269,13 @@ button[class="update"] {
     margin-left: 3%;
 }
 
-.favorite button {
+.favorite button, button[class="close-button"] {
     width: 1.7em;
     height: 1.7em;
     background-color: #ba68c8;
     border-radius: 50%;
     font-weight: bold;
-    font-size: 1vw;
+    font-size: 1em;
 
 }
 
@@ -283,6 +287,27 @@ button[class="update"] {
 @media (max-width: 1200px) {
     button[class="update"] span {
         display: none;
+    }
+    button[class="close-button"] {
+        background-color: #ba68c8;
+        border-radius: 50%;
+    }
+
+    h1 {
+        font-size: 1.2em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    h3 {
+        font-size: 1.3em;
+        margin-right: 5%;
+    }
+
+    .add-city input {
+        font-size: 0.85em;
     }
 
     .update {
@@ -297,9 +322,7 @@ button[class="update"] {
 
     .container {
         display: block;
-        padding-left: 7%;
-        margin: 0 15% 0 15%;
-        width: 65%;
+        width: 100%;
     }
 
     .current-city {
@@ -331,10 +354,12 @@ button[class="update"] {
     }
 
     .favorite button, .favorites_header button {
-        width: 2em;
-        height: 2em;
+        width: 1em;
+        height: 1em;
         margin-bottom: 5px;
         margin-top: 5px;
+        font-size: 1.5em;
+        vertical-align: sub;
     }
 
     .current_weather li {
