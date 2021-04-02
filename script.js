@@ -25,12 +25,6 @@ async function getCities() {
     return cities;
 }
 
-function createStorage() {
-    if (cityStorage.getItem('lastId') === null) {
-        cityStorage.setItem('lastId', 0);
-    }
-}
-
 cityForm.addEventListener('submit', function (e) {
     const cityInput = document.getElementById('favorite-city-name');
     addCity(cityInput.value);
@@ -42,7 +36,6 @@ citiesList.addEventListener('click', function (event) {
     if (!event.target.className.includes('close-button')) {
         return;
     }
-
     const cityId = event.target.closest('li').id.split('_')[1];
     deleteCityById(cityId);
 });
@@ -53,7 +46,6 @@ refreshButton.addEventListener('click', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    createStorage();
     setLoaderOnCurrentCity();
     getCoordinates();
     loadCities();
@@ -97,30 +89,36 @@ async function addCity(cityName, isLoad = false) {
     const favoriteCityElement = renderEmptyCity(cityName);
     citiesList.appendChild(favoriteCityElement);
     if (!isLoad) {
+        let weatherData = await getWeatherByCityName(cityName);
+        if (weatherData['cod'] !== 200) {
+            alert("404. Город не найден")
+            citiesList.removeChild(favoriteCityElement)
+            return
+        }
+        if (weatherData === undefined) {
+            alert('Нет подключения к интернету');
+            citiesList.removeChild(favoriteCityElement)
+
+            return;
+        }
         res = await fetch('http://localhost:3000/features?city=' + cityName,
             {
                 method: 'POST'
             })
         if (res.status === 300) {
             alert("Город уже в избранном")
+            citiesList.removeChild(favoriteCityElement)
+            return
+        }
+        else if (res.status === 404){
+            alert("Не удается произвести подключение")
+            citiesList.removeChild(favoriteCityElement)
             return
         }
     }
 
-    //const favoriteCityElement = renderEmptyCity(cityName);
-
     let weatherData = await getWeatherByCityName(cityName);
-    if (weatherData === undefined) {
-        alert('Нет подключения к интернету');
-        return;
-    }
 
-
-    if (weatherData['cod'] !== 200) {
-        alert('Нет данных по городу');
-        deleteCityFromUI(cityName);
-        return;
-    }
 
     updateCityHeadInfo(favoriteCityElement, weatherData);
     updateFullWeatherInfo(favoriteCityElement, weatherData);
@@ -187,13 +185,6 @@ function renderEmptyCity(cityName) {
 }
 
 function setLoaderOnCurrentCity() {
-    if (!currentCity.classList.contains('loader-on')) {
-
-        currentCity.classList.add('loader-on');
-    }
-}
-
-function setLoaderOnCity(el) {
     if (!currentCity.classList.contains('loader-on')) {
 
         currentCity.classList.add('loader-on');

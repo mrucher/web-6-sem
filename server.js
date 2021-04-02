@@ -19,14 +19,7 @@ const initOptions = {
 
 let pgp = require("pg-promise")(initOptions);
 let db = pgp("postgres://postgres:syDRIk@localhost:5432/weatherDB");
-/*
-const parseIp = (req) =>
-    (typeof req.headers['x-forwarded-for'] === 'string'
-        && req.headers['x-forwarded-for'].split(',').shift())
-    || req.connection?.remoteAddress
-    || req.socket?.remoteAddress
-    || req.connection?.socket?.remoteAddress
-*/
+
 const selectByCity = (city) => {
     return `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=40b59a908fc6450e086253153b78d13e&lang=ru`
 }
@@ -42,6 +35,10 @@ app.get('/weather/city', (request, response) => {
         .then(data => {
             response.send(data);
         })
+        .catch(error => {
+            console.log("favorites get fail")
+            res.status(500).send("Internal error");
+        });
 })
 
 app.get('/weather/coordinates', (request, response) => {
@@ -52,6 +49,10 @@ app.get('/weather/coordinates', (request, response) => {
         .then(data => {
             response.send(data);
         })
+        .catch(error => {
+            console.log("favorites get fail")
+            res.status(500).send("Internal error");
+        });
 })
 
 app.get('/features', async (request, response) => {
